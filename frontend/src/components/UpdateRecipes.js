@@ -30,7 +30,7 @@ const UpdateRecipes = () => {
 
   return (
     <div>
-      <h2>Update Recipe</h2>
+      <h2>Update recipe</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Food Name to Update:
