@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h2>Food Recipes</h2>
+        <h2>Food recipes</h2>
         <button onClick={handleButtonClick}>
           {showRecipes ? "Hide all recipes" : "Show all recipes"}
         </button>
