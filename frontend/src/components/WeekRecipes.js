@@ -11,6 +11,7 @@ const WeekRecipes = () => {
         const shuffledRecipes = data.sort(() => 0.5 - Math.random());
         const selectedRecipes = shuffledRecipes.slice(0, 7);
         setRecipes(selectedRecipes);
+        console.log(data);
         console.log(selectedRecipes);
       } catch (error) {
         console.error('Error fetching recipes:', error);
