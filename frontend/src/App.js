@@ -1,42 +1,51 @@
-import React, { useState } from 'react';
-import './App.css';  
-import ViewRecipes from "./components/ViewRecipes";
-import AddRecipes from "./components/AddRecipes";
-import DeleteRecipe from "./components/DelRecipes";
-import UpdateRecipes from "./components/UpdateRecipes";
-import WeekRecipes from "./components/WeekRecipes";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from "react-router-dom";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import './App.css';
 
-function App() {
-  const [showRecipes, setShowRecipes] = useState(false);
-  const handleButtonClick = () => {
-    setShowRecipes(!showRecipes);
-  };
-
-  const [showWeeklyRecipes, setWeeklyRecipes] = useState(false);
-  const handleWeeklyButton = () => {
-    setWeeklyRecipes(!showWeeklyRecipes);
-  };
+const Navigation = () => {
+  const location = useLocation(); 
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h2>Food recipes</h2>
-        <button onClick={handleButtonClick}>
-          {showRecipes ? "Hide all recipes" : "Show all recipes"}
-        </button>
-        {showRecipes && <ViewRecipes></ViewRecipes>}
-        <AddRecipes></AddRecipes>
-        <DeleteRecipe></DeleteRecipe>
-        <UpdateRecipes></UpdateRecipes>
-        <h2>Weekly recipes</h2>
-        <button onClick={handleWeeklyButton}>
-          {showWeeklyRecipes ? "Hide weekly recipes" : "Show weekly recipes"}
-        </button>
-        {showWeeklyRecipes && <WeekRecipes></WeekRecipes>}
-      </header>
-    </div>
+    <nav>
+      {location.pathname === "/register" && (
+        <div>
+          <Register /> 
+          <Link to="/login">
+            <button>Already have an account?</button>
+          </Link>
+        </div>
+      )}
+      {location.pathname === "/login" && (
+        <div>
+          <Login /> 
+          <Link to="/register">
+            <button>Create an account here!</button>
+          </Link>
+        </div>
+      )}
+    </nav>
   );
-}
+};
+
+const App = () => {
+  return (
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/login" element={<Navigation />} />
+          <Route path="/register" element={<Navigation />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
 
 export default App;
-
