@@ -94,6 +94,11 @@ router.put("/update-recipe", auth, async (req, res) => {
 
     const user = await User.findById(req.user);
     const recipe = user.recipes.find((recipe) => recipe.name === name);
+    if (!recipe) {
+      return res
+        .status(404)
+        .json({ msg: "Recipe not found in user's recipes" });
+    }
 
     if (newname) recipe.name = newname;
     if (ingredients) recipe.ingredients = ingredients;
@@ -109,6 +114,9 @@ router.put("/update-recipe", auth, async (req, res) => {
 router.delete("/delete-recipe", auth, async (req, res) => {
   try {
     const { name } = req.body;
+    if (!name) {
+      return res.status(400).json({ msg: "Recipe name is required" });
+    }
     const user = await User.findById(req.user);
     const recipeIndex = user.recipes.findIndex(
       (recipe) => recipe.name === name
@@ -117,6 +125,7 @@ router.delete("/delete-recipe", auth, async (req, res) => {
       return res.status(404).json({ error: "Recipe not found" });
     }
     user.recipes.splice(recipeIndex, 1);
+
     await user.save();
     res.status(201).json({ msg: "Successfully deleted recipe" });
   } catch (error) {
