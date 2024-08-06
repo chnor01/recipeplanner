@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-const ViewRecipes = () => {
-  const [recipes, setRecipes] = useState([]);
+const ViewWeekly = () => {
+  const [weeklyrecipes, setWeeklyrecipes] = useState([]);
 
   useEffect(() => {
-    const fetchRecipes = async () => {
+    const fetchWeeklyrecipes = async () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
@@ -12,7 +12,7 @@ const ViewRecipes = () => {
           return;
         }
         const response = await fetch(
-          "http://localhost:5000/api/recipes/view-recipes",
+          "http://localhost:5000/api/recipes/view-weekly",
           {
             headers: {
               "Content-Type": "application/json",
@@ -21,24 +21,27 @@ const ViewRecipes = () => {
           }
         );
         const data = await response.json();
-        setRecipes(data);
+        if (Array.isArray(data)) {
+          setWeeklyrecipes(data.filter((item) => item !== null));
+        }
       } catch (error) {
         console.error("Error fetching recipes:", error);
       }
     };
 
-    fetchRecipes();
+    fetchWeeklyrecipes();
   }, []);
 
   return (
     <div>
       <h2>Current recipes </h2>
       <ol>
-        {recipes.length > 0 ? (
-          recipes.map((recipe, index) => (
+        {weeklyrecipes.length > 0 ? (
+          weeklyrecipes.map((weeklyrecipes, index) => (
             <li key={index}>
-              <strong>{recipe.name}</strong>: {recipe.ingredients.join(", ")}{" "}
-              <strong>{recipe.instructions}</strong>
+              <strong>{weeklyrecipes.name}</strong>:{" "}
+              {weeklyrecipes.ingredients.join(", ")}{" "}
+              <strong>{weeklyrecipes.instructions}</strong>
             </li>
           ))
         ) : (
@@ -49,4 +52,4 @@ const ViewRecipes = () => {
   );
 };
 
-export default ViewRecipes;
+export default ViewWeekly;

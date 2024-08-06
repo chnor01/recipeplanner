@@ -1,55 +1,70 @@
 import React, { useState } from "react";
 
 const AddRecipe = () => {
-  const [foodname, setFoodname] = useState("");
+  const [recipe, setFoodname] = useState("");
   const [ingredients, setIngredients] = useState("");
+  const [instructions, setInstructions] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const ingredientsArray = ingredients
         .split(",")
         .map((ingredient) => ingredient.trim());
 
-      const response = await fetch("http://localhost:3000/recipes", {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setError("No token found, please log in.");
+        return;
+      }
+
+      const response = await fetch("http://localhost:5000/api/recipes/add", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ foodname, ingredients: ingredientsArray }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({ name: recipe, ingredients: ingredientsArray, instructions }),
       });
       if (response.ok) {
         console.log("Recipe added!");
       } else {
-        console.error("Error adding recipe: ", await response.text());
+        const errorData = await response.json();
+        console.error("Error adding recipe: ", errorData);
       }
     } catch (error) {
       console.error("Error adding recipe: ", error);
     }
   };
-
   return (
-    <div>
-      <h2>Add Recipe</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Recipe name:
-          <input
-            type="text"
-            value={foodname}
-            onChange={(e) => setFoodname(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Ingredients (comma-separated):
-          <input
-            type="text"
-            value={ingredients}
-            onChange={(e) => setIngredients(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Add Recipe</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Recipe Name:</label>
+        <input
+          type="text"
+          value={recipe}
+          onChange={(e) => setFoodname(e.target.value)}
+        />
+      </div>
+      <div>
+        <label>Ingredients (comma separated):</label>
+        <input
+          type="text"
+          value={ingredients}
+          onChange={(e) => setIngredients(e.target.value)}
+        />
+      </div>
+      <div>
+        <label>Instructions:</label>
+        <textarea
+          value={instructions}
+          onChange={(e) => setInstructions(e.target.value)}
+        ></textarea>
+      </div>
+      <button type="submit">Add Recipe</button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+    </form>
   );
 };
 

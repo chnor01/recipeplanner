@@ -6,7 +6,7 @@ const WeekRecipes = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('http://localhost:3000/recipes');
+        const response = await fetch('http://localhost:5000/api/recipes/add-weekly');
         const data = await response.json();
         const shuffledRecipes = data.sort(() => 0.5 - Math.random());
         const selectedRecipes = shuffledRecipes.slice(0, 7);
