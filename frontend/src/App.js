@@ -13,6 +13,9 @@ import DeleteRecipe from "./components/DelRecipes";
 import ViewRecipes from "./components/ViewRecipes";
 import UpdateRecipes from "./components/UpdateRecipes";
 import ViewWeekly from "./components/ViewWeekly";
+import WeekRecipes from "./components/WeekRecipes";
+import Homepage from "./components/Homepage";
+import Dashboard from "./components/Dashboard";
 import "./App.css";
 
 const Navigation = () => {
@@ -30,6 +33,36 @@ const Navigation = () => {
           <button>Create an account here!</button>
         </Link>
       )}
+      {location.pathname === "/add" && (
+        <Link to="/dashboard">
+          <button>Back to dashboard</button>
+        </Link>
+      )}
+      {location.pathname === "/view" && (
+        <Link to="/dashboard">
+          <button>Back to dashboard</button>
+        </Link>
+      )}
+      {location.pathname === "/delete" && (
+        <Link to="/dashboard">
+          <button>Back to dashboard</button>
+        </Link>
+      )}
+      {location.pathname === "/update" && (
+        <Link to="/dashboard">
+          <button>Back to dashboard</button>
+        </Link>
+      )}
+      {location.pathname === "/view-weekly" && (
+        <Link to="/dashboard">
+          <button>Back to dashboard</button>
+        </Link>
+      )}
+      {location.pathname === "/add-weekly" && (
+        <Link to="/dashboard">
+          <button>Back to dashboard</button>
+        </Link>
+      )}
     </nav>
   );
 };
@@ -40,6 +73,7 @@ const App = () => {
       <div>
         <Navigation />
         <Routes>
+          <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/add" element={<AddRecipe />} />
@@ -47,6 +81,8 @@ const App = () => {
           <Route path="/view" element={<ViewRecipes />} />
           <Route path="/update" element={<UpdateRecipes />} />
           <Route path="/view-weekly" element={<ViewWeekly />} />
+          <Route path="/add-weekly" element={<WeekRecipes />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </Router>

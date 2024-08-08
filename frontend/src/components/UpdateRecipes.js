@@ -48,8 +48,10 @@ const UpdateRecipes = () => {
 
   return (
     <div>
-      <h2>Update recipe</h2>
       <form onSubmit={handleSubmit}>
+        <header>
+          <h1>Update a recipe</h1>
+        </header>
         <label>
           Recipe name to update:
           <input

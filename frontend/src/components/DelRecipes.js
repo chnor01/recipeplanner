@@ -40,8 +40,11 @@ const DeleteRecipe = () => {
 
   return (
     <div>
-      <h2>Delete recipe</h2>
+
       <form onSubmit={handleSubmit}>
+      <header>
+        <h1>Delete recipe</h1>
+      </header>
         <label>
           Recipe name:
           <input

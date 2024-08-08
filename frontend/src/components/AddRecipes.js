@@ -25,7 +25,11 @@ const AddRecipe = () => {
           "Content-Type": "application/json",
           Authorization: "Bearer " + token,
         },
-        body: JSON.stringify({ name: recipe, ingredients: ingredientsArray, instructions }),
+        body: JSON.stringify({
+          name: recipe,
+          ingredients: ingredientsArray,
+          instructions,
+        }),
       });
       if (response.ok) {
         console.log("Recipe added!");
@@ -40,6 +44,10 @@ const AddRecipe = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
+        <header>
+          <h1>Add a new recipe to your collection</h1>
+        </header>
+
         <label>Recipe Name:</label>
         <input
           type="text"

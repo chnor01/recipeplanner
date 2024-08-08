@@ -34,7 +34,9 @@ const ViewWeekly = () => {
 
   return (
     <div>
-      <h2>Current recipes </h2>
+      <header>
+        <h1>Weekly recipes</h1>
+      </header>
       <ol>
         {weeklyrecipes.length > 0 ? (
           weeklyrecipes.map((weeklyrecipes, index) => (

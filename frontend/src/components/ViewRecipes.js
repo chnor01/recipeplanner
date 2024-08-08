@@ -32,7 +32,10 @@ const ViewRecipes = () => {
 
   return (
     <div>
-      <h2>Current recipes </h2>
+      <header>
+        <h1>Current recipes </h1>
+      </header>
+
       <ol>
         {recipes.length > 0 ? (
           recipes.map((recipe, index) => (
