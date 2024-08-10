@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
 
-const ViewRecipes = () => {
-  const [recipes, setRecipes] = useState([]);
+const ViewWeekly = () => {
+  const [weeklyrecipes, setWeeklyrecipes] = useState([]);
+  const daysOfWeek = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
 
   useEffect(() => {
-    const fetchRecipes = async () => {
+    const fetchWeeklyrecipes = async () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
@@ -12,7 +21,7 @@ const ViewRecipes = () => {
           return;
         }
         const response = await fetch(
-          "http://localhost:5000/api/recipes/view-recipes",
+          "http://localhost:5000/api/recipes/view-weekly",
           {
             headers: {
               "Content-Type": "application/json",
@@ -21,26 +30,28 @@ const ViewRecipes = () => {
           }
         );
         const data = await response.json();
-        setRecipes(data);
+        if (Array.isArray(data)) {
+          setWeeklyrecipes(data.filter((item) => item !== null));
+        }
       } catch (error) {
         console.error("Error fetching recipes:", error);
       }
     };
 
-    fetchRecipes();
+    fetchWeeklyrecipes();
   }, []);
 
   return (
     <div>
       <header>
-        <h1>Current recipes </h1>
+        <h1>Weekly recipes</h1>
       </header>
-
       <ol>
-        {recipes.length > 0 ? (
-          recipes.map((recipe, index) => (
+        {weeklyrecipes.length > 0 ? (
+          weeklyrecipes.slice(0, 7).map((recipe, index) => (
             <li key={index}>
-              <strong>{recipe.name}</strong>: {recipe.ingredients.join(", ")}{" "}
+              {daysOfWeek[index]}: <strong>{recipe.name}</strong>:{" "}
+              {recipe.ingredients.join(", ")}{" "}
               <strong>{recipe.instructions}</strong>
             </li>
           ))
@@ -52,4 +63,4 @@ const ViewRecipes = () => {
   );
 };
 
-export default ViewRecipes;
+export default ViewWeekly;
