@@ -2,6 +2,15 @@ import React, { useEffect, useState } from "react";
 
 const ViewWeekly = () => {
   const [weeklyrecipes, setWeeklyrecipes] = useState([]);
+  const daysOfWeek = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
 
   useEffect(() => {
     const fetchWeeklyrecipes = async () => {
@@ -39,11 +48,11 @@ const ViewWeekly = () => {
       </header>
       <ol>
         {weeklyrecipes.length > 0 ? (
-          weeklyrecipes.map((weeklyrecipes, index) => (
+          weeklyrecipes.slice(0, 7).map((recipe, index) => (
             <li key={index}>
-              <strong>{weeklyrecipes.name}</strong>:{" "}
-              {weeklyrecipes.ingredients.join(", ")}{" "}
-              <strong>{weeklyrecipes.instructions}</strong>
+              {daysOfWeek[index]}: <strong>{recipe.name}</strong>:{" "}
+              {recipe.ingredients.join(", ")}{" "}
+              <strong>{recipe.instructions}</strong>
             </li>
           ))
         ) : (

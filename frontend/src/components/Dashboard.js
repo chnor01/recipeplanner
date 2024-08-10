@@ -7,6 +7,7 @@ const Dashboard = () => {
       <header className="dashboard-header">
         <h1>Welcome!</h1>
       </header>
+
       <section className="dashboard-content">
         <p>Here you can manage your recipes.</p>
         <div className="dashboard-links">

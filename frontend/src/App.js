@@ -16,6 +16,7 @@ import ViewWeekly from "./components/ViewWeekly";
 import WeekRecipes from "./components/WeekRecipes";
 import Homepage from "./components/Homepage";
 import Dashboard from "./components/Dashboard";
+import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
 
 const Navigation = () => {
@@ -23,16 +24,6 @@ const Navigation = () => {
 
   return (
     <nav>
-      {location.pathname === "/register" && (
-        <Link to="/login">
-          <button>Already have an account?</button>
-        </Link>
-      )}
-      {location.pathname === "/login" && (
-        <Link to="/register">
-          <button>Create an account here!</button>
-        </Link>
-      )}
       {location.pathname === "/add" && (
         <Link to="/dashboard">
           <button>Back to dashboard</button>
@@ -63,6 +54,11 @@ const Navigation = () => {
           <button>Back to dashboard</button>
         </Link>
       )}
+      {location.pathname === "/dashboard" && (
+        <Link to="/">
+          <button>Back home</button>
+        </Link>
+      )}
     </nav>
   );
 };
@@ -76,13 +72,27 @@ const App = () => {
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/add" element={<AddRecipe />} />
-          <Route path="/delete" element={<DeleteRecipe />} />
-          <Route path="/view" element={<ViewRecipes />} />
-          <Route path="/update" element={<UpdateRecipes />} />
-          <Route path="/view-weekly" element={<ViewWeekly />} />
-          <Route path="/add-weekly" element={<WeekRecipes />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/add" element={<AddRecipe />} />
+          </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/view" element={<ViewRecipes />} />
+          </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/delete" element={<DeleteRecipe />} />
+          </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/update" element={<UpdateRecipes />} />
+          </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/view-weekly" element={<ViewWeekly />} />
+          </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/add-weekly" element={<WeekRecipes />} />
+          </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
         </Routes>
       </div>
     </Router>

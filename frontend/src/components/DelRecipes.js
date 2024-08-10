@@ -1,8 +1,14 @@
 import React, { useState } from "react";
+import ViewRecipes from "./ViewRecipes";
 
 const DeleteRecipe = () => {
   const [foodname, setFoodname] = useState("");
   const [error, setError] = useState("");
+  const [showrec, setShowrec] = useState(false);
+
+  const recipeClick = () => {
+    setShowrec(!showrec);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +35,8 @@ const DeleteRecipe = () => {
 
       if (response.ok) {
         console.log("Recipe deleted");
+        alert("Deleted recipe!")
+        window.location.reload();
       } else {
         const data = await response.json();
         console.error("Error deleting recipe:", data);
@@ -40,11 +48,10 @@ const DeleteRecipe = () => {
 
   return (
     <div>
-
       <form onSubmit={handleSubmit}>
-      <header>
-        <h1>Delete recipe</h1>
-      </header>
+        <header>
+          <h1>Delete recipe</h1>
+        </header>
         <label>
           Recipe name:
           <input
@@ -53,8 +60,12 @@ const DeleteRecipe = () => {
             onChange={(e) => setFoodname(e.target.value)}
           />
         </label>
-        <button type="submit">Delete recipe</button>
+        <button type="submit" onClick={setShowrec}>Delete recipe</button>
+        <button onClick={recipeClick}>
+          {showrec ? "Hide recipes" : "Show recipes"}
+        </button>
       </form>
+      {showrec && <ViewRecipes />};
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
