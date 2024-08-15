@@ -4,6 +4,7 @@ const AddRecipe = () => {
   const [recipe, setFoodname] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
+  const [food_type, setFoodtype] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
@@ -29,13 +30,16 @@ const AddRecipe = () => {
           name: recipe,
           ingredients: ingredientsArray,
           instructions,
+          food_type,
         }),
       });
       if (response.ok) {
         console.log("Recipe added!");
+        alert("Recipe added!");
       } else {
         const errorData = await response.json();
         console.error("Error adding recipe: ", errorData);
+        alert("Failed to add recipe!");
       }
     } catch (error) {
       console.error("Error adding recipe: ", error);
@@ -69,6 +73,14 @@ const AddRecipe = () => {
           value={instructions}
           onChange={(e) => setInstructions(e.target.value)}
         ></textarea>
+      </div>
+      <div>
+        <label>Food type (breakfast, lunch, dinner, snack):</label>
+        <input
+          type="text"
+          value={food_type}
+          onChange={(e) => setFoodtype(e.target.value)}
+        />
       </div>
       <button type="submit">Add Recipe</button>
       {error && <p style={{ color: "red" }}>{error}</p>}

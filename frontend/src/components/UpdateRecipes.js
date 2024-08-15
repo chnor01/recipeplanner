@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import ViewRecipes from "./ViewRecipes";
 
 const UpdateRecipes = () => {
   const [foodname, setFoodname] = useState("");
   const [newname, setNewname] = useState("");
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
+  const [food_type, setFoodtype] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,14 +34,18 @@ const UpdateRecipes = () => {
             newname,
             ingredients: ingredientsArray,
             instructions,
+            food_type,
           }),
         }
       );
       if (response.ok) {
         console.log("Recipe updated!");
+        alert("Recipe updated!");
+        window.location.reload();
       } else {
         const errorData = await response.json();
         console.error("Error updating recipe: ", errorData);
+        alert("Failed to update recipe");
       }
     } catch (error) {
       console.error("Error updating recipe: ", error);
@@ -84,8 +90,17 @@ const UpdateRecipes = () => {
             onChange={(e) => setInstructions(e.target.value)}
           />
         </label>
+        <label>
+          Food type(breakfast, lunch, dinner, snack):
+          <input
+            type="text"
+            value={food_type}
+            onChange={(e) => setFoodtype(e.target.value)}
+          />
+        </label>
         <button type="submit">Update Recipe</button>
       </form>
+      <ViewRecipes></ViewRecipes>
     </div>
   );
 };

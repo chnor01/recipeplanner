@@ -40,7 +40,8 @@ const ViewRecipes = () => {
         {recipes.length > 0 ? (
           recipes.map((recipe, index) => (
             <li key={index}>
-              <strong>{recipe.name}</strong>: {recipe.ingredients.join(", ")}{" "}
+              {recipe.food_type} <strong>{recipe.name}</strong>:{" "}
+              {recipe.ingredients.join(", ")}{" "}
               <strong>{recipe.instructions}</strong>
             </li>
           ))

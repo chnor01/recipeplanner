@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const ViewWeekly = () => {
   const [weeklyrecipes, setWeeklyrecipes] = useState([]);
-  const daysOfWeek = [
+  const daysOfWeekOrder = [
     "Monday",
     "Tuesday",
     "Wednesday",
@@ -11,6 +11,11 @@ const ViewWeekly = () => {
     "Saturday",
     "Sunday",
   ];
+  const sortedWeeklyRecipes = [...weeklyrecipes].sort((a, b) => {
+    const dayA = a.day;
+    const dayB = b.day;
+    return daysOfWeekOrder.indexOf(dayA) - daysOfWeekOrder.indexOf(dayB);
+  });
 
   useEffect(() => {
     const fetchWeeklyrecipes = async () => {
@@ -30,6 +35,7 @@ const ViewWeekly = () => {
           }
         );
         const data = await response.json();
+        console.log(data);
         if (Array.isArray(data)) {
           setWeeklyrecipes(data.filter((item) => item !== null));
         }
@@ -47,12 +53,14 @@ const ViewWeekly = () => {
         <h1>Weekly recipes</h1>
       </header>
       <ol>
-        {weeklyrecipes.length > 0 ? (
-          weeklyrecipes.slice(0, 7).map((recipe, index) => (
+        {sortedWeeklyRecipes.length > 0 ? (
+          sortedWeeklyRecipes.map((recipe, index) => (
             <li key={index}>
-              {daysOfWeek[index]}: <strong>{recipe.name}</strong>:{" "}
-              {recipe.ingredients.join(", ")}{" "}
-              <strong>{recipe.instructions}</strong>
+              <strong>
+                {recipe.day}: {recipe.recipe.food_type} {recipe.recipe.name}
+              </strong>
+              : {recipe.recipe.ingredients.join(", ")}{" "}
+              <strong>{recipe.recipe.instructions}</strong>
             </li>
           ))
         ) : (
