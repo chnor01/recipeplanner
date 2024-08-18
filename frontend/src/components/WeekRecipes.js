@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import ViewRecipes from "./ViewRecipes";
 
 const WeekRecipes = () => {
   const [recipe, setRecipe] = useState("");
+  const [day, setDay] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
@@ -23,14 +25,18 @@ const WeekRecipes = () => {
           },
           body: JSON.stringify({
             name: recipe,
+            day: day,
           }),
         }
       );
       if (response.ok) {
         console.log("Recipe added!");
+        alert("Added recipe to weekly recipes!");
+        window.location.reload();
       } else {
         const errorData = await response.json();
         console.error("Error adding recipe: ", errorData);
+        alert("Failed to add to weekly recipes!");
       }
     } catch (error) {
       console.error("Error fetching recipes:", error);
@@ -51,8 +57,17 @@ const WeekRecipes = () => {
             onChange={(e) => setRecipe(e.target.value)}
           />
         </label>
+        <label>
+          Day:
+          <input
+            type="text"
+            value={day}
+            onChange={(e) => setDay(e.target.value)}
+          />
+        </label>
         <button type="submit">Add to weekly recipes</button>
       </form>
+      <ViewRecipes></ViewRecipes>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );

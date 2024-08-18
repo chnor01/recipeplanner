@@ -3,12 +3,8 @@ import ViewRecipes from "./ViewRecipes";
 
 const DeleteRecipe = () => {
   const [foodname, setFoodname] = useState("");
+  const [day, setDay] = useState("");
   const [error, setError] = useState("");
-  const [showrec, setShowrec] = useState(false);
-
-  const recipeClick = () => {
-    setShowrec(!showrec);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,17 +25,19 @@ const DeleteRecipe = () => {
           },
           body: JSON.stringify({
             name: foodname,
+            day,
           }),
         }
       );
 
       if (response.ok) {
         console.log("Recipe deleted");
-        alert("Deleted recipe!")
+        alert("Deleted recipe!");
         window.location.reload();
       } else {
         const data = await response.json();
         console.error("Error deleting recipe:", data);
+        alert("Failed to delete recipe!");
       }
     } catch (error) {
       console.error("Error deleting recipe: ", error);
@@ -60,12 +58,17 @@ const DeleteRecipe = () => {
             onChange={(e) => setFoodname(e.target.value)}
           />
         </label>
-        <button type="submit" onClick={setShowrec}>Delete recipe</button>
-        <button onClick={recipeClick}>
-          {showrec ? "Hide recipes" : "Show recipes"}
-        </button>
+        <label>
+          Day:
+          <input
+            type="text"
+            value={day}
+            onChange={(e) => setDay(e.target.value)}
+          />
+        </label>
+        <button type="submit">Delete recipe</button>
       </form>
-      {showrec && <ViewRecipes />};
+      <ViewRecipes></ViewRecipes>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );

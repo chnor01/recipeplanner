@@ -2,6 +2,10 @@ body {
   background-color: #85a385;
 }
 
+.divDailyNutrients {
+  font-size: 20px;
+}
+
 .homepage {
   text-align: center;
   padding: 50px;
