@@ -3,6 +3,7 @@ import ViewRecipes from "./ViewRecipes";
 
 const DeleteRecipe = () => {
   const [foodname, setFoodname] = useState("");
+  const [day, setDay] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
@@ -24,6 +25,7 @@ const DeleteRecipe = () => {
           },
           body: JSON.stringify({
             name: foodname,
+            day,
           }),
         }
       );
@@ -54,6 +56,14 @@ const DeleteRecipe = () => {
             type="text"
             value={foodname}
             onChange={(e) => setFoodname(e.target.value)}
+          />
+        </label>
+        <label>
+          Day:
+          <input
+            type="text"
+            value={day}
+            onChange={(e) => setDay(e.target.value)}
           />
         </label>
         <button type="submit">Delete recipe</button>

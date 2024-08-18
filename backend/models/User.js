@@ -64,6 +64,20 @@ const WeeklySchema = new mongoose.Schema({
     dinner: [{ type: mongoose.Schema.Types.ObjectId, ref: "User.recipes" }],
     snack: [{ type: mongoose.Schema.Types.ObjectId, ref: "User.recipes" }],
   },
+  dailynutrients: {
+    dailycalories: {
+      type: Number,
+    },
+    dailyprotein: {
+      type: Number,
+    },
+    dailyfat: {
+      type: Number,
+    },
+    dailycarbs: {
+      type: Number,
+    },
+  },
 });
 
 const UserSchema = new mongoose.Schema({

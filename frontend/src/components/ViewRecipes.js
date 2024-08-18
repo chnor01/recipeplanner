@@ -40,9 +40,28 @@ const ViewRecipes = () => {
         {recipes.length > 0 ? (
           recipes.map((recipe, index) => (
             <li key={index}>
-              {recipe.food_type} <strong>{recipe.name}</strong>:{" "}
-              {recipe.ingredients.join(", ")}{" "}
-              <strong>{recipe.instructions}</strong>
+              {recipe.food_type}, <strong>{recipe.name}</strong>:{" "}
+              <p>
+                <strong>Ingredients:</strong>
+              </p>
+              {recipe.ingredients.map((ingredient, index) => (
+                <div key={index}>
+                  {ingredient.foodname}
+                  {index < recipe.ingredients.length - 1 ? ", " : ""}
+                </div>
+              ))}
+              <p>
+                <strong>Instructions:</strong>
+              </p>
+              {recipe.instructions}
+              <div>
+                <p>
+                  <strong>Nutrients: </strong>
+                </p>
+                Calories: {recipe.nutrients.calories} cal, Protein:{" "}
+                {recipe.nutrients.protein}g, Fat: {recipe.nutrients.fat}g,
+                Carbohydrates: {recipe.nutrients.carbs}g
+              </div>
             </li>
           ))
         ) : (

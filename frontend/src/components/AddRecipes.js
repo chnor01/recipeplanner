@@ -2,18 +2,35 @@ import React, { useState } from "react";
 
 const AddRecipe = () => {
   const [recipe, setFoodname] = useState("");
-  const [ingredients, setIngredients] = useState("");
+  const [ingredients, setIngredients] = useState([
+    { foodname: "", quantity: "" },
+  ]);
   const [instructions, setInstructions] = useState("");
-  const [food_type, setFoodtype] = useState("");
+  const [food_type, setFoodtype] = useState("breakfast");
   const [error, setError] = useState("");
+
+  const handleIngredientChange = (index, event) => {
+    const values = [...ingredients];
+    values[index][event.target.name] = event.target.value;
+    setIngredients(values);
+    console.log(ingredients, index);
+  };
+
+  const handleAddIngredient = () => {
+    setIngredients([...ingredients, { foodname: "", quantity: "" }]);
+    console.log(ingredients);
+  };
+
+  const handleRemoveIngredient = (index) => {
+    const values = [...ingredients];
+    values.splice(index, 1);
+    setIngredients(values);
+    console.log(ingredients, index);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const ingredientsArray = ingredients
-        .split(",")
-        .map((ingredient) => ingredient.trim());
-
       const token = localStorage.getItem("token");
       if (!token) {
         setError("No token found, please log in.");
@@ -28,7 +45,7 @@ const AddRecipe = () => {
         },
         body: JSON.stringify({
           name: recipe,
-          ingredients: ingredientsArray,
+          ingredients,
           instructions,
           food_type,
         }),
@@ -36,6 +53,11 @@ const AddRecipe = () => {
       if (response.ok) {
         console.log("Recipe added!");
         alert("Recipe added!");
+        setFoodname("");
+        setIngredients([{ name: "", quantity: "" }]);
+        setInstructions("");
+        setFoodtype("breakfast");
+        setError(null);
       } else {
         const errorData = await response.json();
         console.error("Error adding recipe: ", errorData);
@@ -46,45 +68,76 @@ const AddRecipe = () => {
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <header>
-          <h1>Add a new recipe to your collection</h1>
-        </header>
+    <div>
+      <header>
+        <h1>Add a New Recipe</h1>
+      </header>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Recipe Name:</label>
+          <input
+            type="text"
+            value={recipe}
+            onChange={(e) => setFoodname(e.target.value)}
+            required
+          />
+        </div>
 
-        <label>Recipe Name:</label>
-        <input
-          type="text"
-          value={recipe}
-          onChange={(e) => setFoodname(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Ingredients (comma separated):</label>
-        <input
-          type="text"
-          value={ingredients}
-          onChange={(e) => setIngredients(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Instructions:</label>
-        <textarea
-          value={instructions}
-          onChange={(e) => setInstructions(e.target.value)}
-        ></textarea>
-      </div>
-      <div>
-        <label>Food type (breakfast, lunch, dinner, snack):</label>
-        <input
-          type="text"
-          value={food_type}
-          onChange={(e) => setFoodtype(e.target.value)}
-        />
-      </div>
-      <button type="submit">Add Recipe</button>
+        <div>
+          <label>Food Type:</label>
+          <select
+            value={food_type}
+            onChange={(e) => setFoodtype(e.target.value)}
+          >
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+            <option value="snack">Snack</option>
+          </select>
+        </div>
+
+        {ingredients.map((ingredient, index) => (
+          <div key={index}>
+            <label>Ingredient:</label>
+            <input
+              type="text"
+              name="foodname"
+              value={ingredient.foodname || ""}
+              onChange={(e) => handleIngredientChange(index, e)}
+              required
+            />
+            <label>Quantity (grams):</label>
+            <input
+              type="number"
+              name="quantity"
+              value={ingredient.quantity || ""}
+              onChange={(e) => handleIngredientChange(index, e)}
+              required
+            />
+            <button type="button" onClick={() => handleRemoveIngredient(index)}>
+              Remove Ingredient
+            </button>
+          </div>
+        ))}
+
+        <button type="button" onClick={handleAddIngredient}>
+          Add Another Ingredient
+        </button>
+
+        <div>
+          <label>Instructions:</label>
+          <textarea
+            value={instructions}
+            onChange={(e) => setInstructions(e.target.value)}
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit">Add Recipe</button>
+      </form>
+
       {error && <p style={{ color: "red" }}>{error}</p>}
-    </form>
+    </div>
   );
 };
 

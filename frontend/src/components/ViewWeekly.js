@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const ViewWeekly = () => {
   const [weeklyrecipes, setWeeklyrecipes] = useState([]);
-  const daysOfWeekOrder = [
+  const daysOrder = [
     "Monday",
     "Tuesday",
     "Wednesday",
@@ -11,10 +11,8 @@ const ViewWeekly = () => {
     "Saturday",
     "Sunday",
   ];
-  const sortedWeeklyRecipes = [...weeklyrecipes].sort((a, b) => {
-    const dayA = a.day;
-    const dayB = b.day;
-    return daysOfWeekOrder.indexOf(dayA) - daysOfWeekOrder.indexOf(dayB);
+  const sortedWeeklyRecipes = weeklyrecipes.sort((a, b) => {
+    return daysOrder.indexOf(a.day) - daysOrder.indexOf(b.day);
   });
 
   useEffect(() => {
@@ -50,23 +48,75 @@ const ViewWeekly = () => {
   return (
     <div>
       <header>
-        <h1>Weekly recipes</h1>
+        <h1>Weekly Recipes</h1>
       </header>
-      <ol>
-        {sortedWeeklyRecipes.length > 0 ? (
-          sortedWeeklyRecipes.map((recipe, index) => (
-            <li key={index}>
+      <br></br>
+      {weeklyrecipes.length > 0 ? (
+        sortedWeeklyRecipes.map((dayEntry) => (
+          <div key={dayEntry.day}>
+            <header>
+              <h1>{dayEntry.day}</h1>
+            </header>
+            <div className="divDailyNutrients">
               <strong>
-                {recipe.day}: {recipe.recipe.food_type} {recipe.recipe.name}
+                <h2>Daily Nutrients:</h2>
               </strong>
-              : {recipe.recipe.ingredients.join(", ")}{" "}
-              <strong>{recipe.recipe.instructions}</strong>
-            </li>
-          ))
-        ) : (
-          <li>No recipes found</li>
-        )}
-      </ol>
+              <p>
+                <br />
+                Calories: {dayEntry.dailynutrients.dailycalories}cal
+                <br />
+                Protein: {dayEntry.dailynutrients.dailyprotein}g
+                <br />
+                Fat: {dayEntry.dailynutrients.dailyfat}g
+                <br />
+                Carbs: {dayEntry.dailynutrients.dailycarbs}g
+              </p>
+            </div>
+
+            <div>
+              {Object.keys(dayEntry.meals).map((mealType) => (
+                <div key={mealType}>
+                  <h2>
+                    {mealType.charAt(0).toUpperCase() + mealType.slice(1)}
+                  </h2>
+                  {dayEntry.meals[mealType].length > 0 ? (
+                    <ul>
+                      {dayEntry.meals[mealType].map((recipe, index) => (
+                        <li key={index}>
+                          Recipe: {recipe.name}
+                          <br></br>
+                          <strong>Ingredients:</strong>
+                          {recipe.ingredients.map((ingredient, index) => (
+                            <div key={index}>
+                              {ingredient.foodname}
+                              {index < recipe.ingredients.length - 1
+                                ? ", "
+                                : ""}
+                            </div>
+                          ))}
+                          <strong>Instructions: </strong> <br></br>
+                          {recipe.instructions}
+                          <p>
+                            <strong> Nutrients:</strong> <br></br>
+                            Calories: {recipe.nutrients.calories}cal <br></br>
+                            Protein: {recipe.nutrients.protein}g <br></br> Fat:{" "}
+                            {recipe.nutrients.fat}g <br></br>
+                            Carbs: {recipe.nutrients.carbs}g
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p>No recipes found</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      ) : (
+        <p>No recipes found</p>
+      )}
     </div>
   );
 };
