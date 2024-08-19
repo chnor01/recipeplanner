@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ViewRecipes from "./ViewRecipes";
+import ViewWeekly from "./ViewWeekly";
 
 const DeleteRecipe = () => {
   const [foodname, setFoodname] = useState("");
@@ -48,7 +48,7 @@ const DeleteRecipe = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <header>
-          <h1>Delete recipe</h1>
+          <h1>Delete a recipe from weekly schedule</h1>
         </header>
         <label>
           Recipe name:
@@ -68,7 +68,7 @@ const DeleteRecipe = () => {
         </label>
         <button type="submit">Delete recipe</button>
       </form>
-      <ViewRecipes></ViewRecipes>
+      <ViewWeekly></ViewWeekly>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );

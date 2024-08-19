@@ -170,6 +170,15 @@ router.post("/add-weekly", auth, async (req, res) => {
   }
 });
 
+router.get("/ingredients", auth, async (req, res) => {
+  try {
+    const ingredients = await FoodItem.find({}, { Food: 1, _id: 0 });
+    res.json(ingredients);
+  } catch (error) {
+    res.status(500).json({ error: "Error retrieving ingredients" });
+  }
+});
+
 router.get("/view-recipes", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user);
@@ -259,7 +268,7 @@ router.put("/update-recipe", auth, async (req, res) => {
     }
 
     if (newname) recipe.name = newname;
-    if (ingredients) {
+    if (ingredients.some((ingredient) => ingredient.foodname)) {
       const foods = await FoodItem.find({
         Food: { $in: ingredients.map((ingredient) => ingredient.foodname) },
       });

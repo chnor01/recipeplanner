@@ -15,7 +15,7 @@ const Dashboard = () => {
             <button>Add a recipe</button>
           </Link>
           <Link to="/view">
-            <button>View all your recipes</button>
+            <button>View all recipes</button>
           </Link>
           <Link to="/delete">
             <button>Delete a recipe</button>
@@ -24,10 +24,10 @@ const Dashboard = () => {
             <button>Update a recipe</button>
           </Link>
           <Link to="/view-weekly">
-            <button>View your weekly recipes</button>
+            <button>View daily meal plan</button>
           </Link>
           <Link to="/add-weekly">
-            <button>Add recipe to weekly schedule</button>
+            <button>Add recipe to daily meal plan</button>
           </Link>
         </div>
       </section>
