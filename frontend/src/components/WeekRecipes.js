@@ -47,7 +47,7 @@ const WeekRecipes = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <header>
-          <h1>Add a recipe to your weekly schedule</h1>
+          <h1>Add recipe to your daily meal plan</h1>
         </header>
         <label>
           Recipe name:

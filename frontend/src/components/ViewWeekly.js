@@ -48,7 +48,7 @@ const ViewWeekly = () => {
   return (
     <div>
       <header>
-        <h1>Weekly Recipes</h1>
+        <h1>Meal plan for the week</h1>
       </header>
       <br></br>
       {weeklyrecipes.length > 0 ? (
