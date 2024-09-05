@@ -17,6 +17,7 @@ import WeekRecipes from "./components/WeekRecipes";
 import Homepage from "./components/Homepage";
 import Dashboard from "./components/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
+import ViewShopping from "./components/ViewShopping";
 import "./App.css";
 
 const Navigation = () => {
@@ -59,6 +60,11 @@ const Navigation = () => {
           <button>Back home</button>
         </Link>
       )}
+      {location.pathname === "/shoppinglist" && (
+        <Link to="/dashboard">
+          <button>Back to dashboard</button>
+        </Link>
+      )}
     </nav>
   );
 };
@@ -93,6 +99,10 @@ const App = () => {
           <Route element={<PrivateRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/shoppinglist" element={<ViewShopping />} />
+          </Route>
+          
         </Routes>
       </div>
     </Router>

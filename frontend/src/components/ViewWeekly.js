@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import BarChart from "./BarChart";
 
 const ViewWeekly = () => {
   const [weeklyrecipes, setWeeklyrecipes] = useState([]);
@@ -11,6 +12,12 @@ const ViewWeekly = () => {
     "Saturday",
     "Sunday",
   ];
+
+  const [weekcalories, setWeekcalories] = useState([]);
+  const [weekfat, setWeekfat] = useState([]);
+  const [weekprotein, setWeekprotein] = useState([]);
+  const [weekcarbs, setWeekcarbs] = useState([]);
+
   const sortedWeeklyRecipes = weeklyrecipes.sort((a, b) => {
     return daysOrder.indexOf(a.day) - daysOrder.indexOf(b.day);
   });
@@ -33,9 +40,25 @@ const ViewWeekly = () => {
           }
         );
         const data = await response.json();
-        console.log(data);
+
         if (Array.isArray(data)) {
           setWeeklyrecipes(data.filter((item) => item !== null));
+
+          const calories = [];
+          const fat = [];
+          const protein = [];
+          const carbs = [];
+
+          data.forEach((dayEntry) => {
+            calories.push(dayEntry.dailynutrients.dailycalories);
+            fat.push(dayEntry.dailynutrients.dailyfat);
+            protein.push(dayEntry.dailynutrients.dailyprotein);
+            carbs.push(dayEntry.dailynutrients.dailycarbs);
+          });
+          setWeekcalories(calories);
+          setWeekfat(fat);
+          setWeekprotein(protein);
+          setWeekcarbs(carbs);
         }
       } catch (error) {
         console.error("Error fetching recipes:", error);
@@ -117,6 +140,40 @@ const ViewWeekly = () => {
       ) : (
         <p>No recipes found</p>
       )}
+      <div className="chart-container">
+        <div className="chart-item">
+          <BarChart
+            nutrition={weekcalories}
+            titletext="Weekly Calories"
+            labeltext="Calories"
+            bgcolor="rgba(28, 73, 94, 0.7)"
+          />
+        </div>
+        <div className="chart-item">
+          <BarChart
+            nutrition={weekfat}
+            titletext="Weekly Fat"
+            labeltext="Fats"
+            bgcolor="rgba(186, 60, 60, 0.7)"
+          />
+        </div>
+        <div className="chart-item">
+          <BarChart
+            nutrition={weekcarbs}
+            titletext="Weekly Carbs"
+            labeltext="Carbs"
+            bgcolor="rgba(71, 143, 83, 0.7)"
+          />
+        </div>
+        <div className="chart-item">
+          <BarChart
+            nutrition={weekprotein}
+            titletext="Weekly Protein"
+            labeltext="Protein"
+            bgcolor="rgba(81, 164, 168, 0.7)"
+          />
+        </div>
+      </div>
     </div>
   );
 };

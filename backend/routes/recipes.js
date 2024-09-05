@@ -198,12 +198,10 @@ router.get("/view-weekly", auth, async (req, res) => {
     user.weeklyrecipes.forEach((dayEntry) => {
       const day = dayEntry.day;
 
-      if (!groupedRecipesByDay[day]) {
-        groupedRecipesByDay[day] = {
-          dailynutrients: dayEntry.dailynutrients,
-          meals: {},
-        };
-      }
+      groupedRecipesByDay[day] = {
+        dailynutrients: dayEntry.dailynutrients,
+        meals: {},
+      };
 
       for (const mealType in dayEntry.meals) {
         if (dayEntry.meals.hasOwnProperty(mealType)) {
@@ -399,6 +397,18 @@ router.delete("/delete-recipe", auth, async (req, res) => {
       }
     }
 
+    let empty_meals = false;
+    for (const mealType in dayEntry.meals) {
+      if (dayEntry.meals[mealType].length === 0) {
+        const dayIndex = user.weeklyrecipes.indexOf(dayEntry);
+        if (dayIndex !== -1) {
+          user.weeklyrecipes.splice(dayIndex, 1);
+          empty_meals = true;
+          break;
+        }
+      }
+    }
+
     if (!recipeFound) {
       return res
         .status(404)
@@ -409,6 +419,44 @@ router.delete("/delete-recipe", auth, async (req, res) => {
     res.status(201).json({ msg: "Successfully deleted recipe" });
   } catch (error) {
     res.status(500).json({ error: "Error deleting recipe" });
+  }
+});
+
+router.get("/shopping-list", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user);
+    const shoppingList = {};
+
+    user.weeklyrecipes.forEach((dayEntry) => {
+      for (const mealType in dayEntry.meals) {
+        if (dayEntry.meals.hasOwnProperty(mealType)) {
+          dayEntry.meals[mealType].forEach((recipeId) => {
+            const recipe = user.recipes.find(
+              (r) => r._id.toString() === recipeId.toString()
+            );
+            if (recipe) {
+              recipe.ingredients.forEach((ingredient) => {
+                const ingredientName = ingredient.foodname;
+                const ingredientQuantity = ingredient.quantity;
+
+                if (shoppingList[ingredientName]) {
+                  shoppingList[ingredientName] += ingredientQuantity;
+                } else {
+                  shoppingList[ingredientName] = ingredientQuantity;
+                }
+              });
+            }
+          });
+        }
+      }
+    });
+    const response = Object.keys(shoppingList).map((ingredient) => ({
+      item: ingredient,
+      quantity: shoppingList[ingredient],
+    }));
+    res.json(response);
+  } catch (error) {
+    res.status(500).json({ error: "Error retrieving ingredients" });
   }
 });
 
