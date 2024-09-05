@@ -25,7 +25,9 @@ const Register = () => {
       const data = await response.json();
       console.log(data);
       alert("Successfully registered!");
-      navigate("/login");
+      localStorage.setItem("token", data.token);
+      navigate("/dashboard");
+      
     } catch (error) {
       console.error(error.message);
       if (error.message === "User already exists") {

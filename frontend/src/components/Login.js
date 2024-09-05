@@ -27,7 +27,6 @@ const Login = () => {
       alert("Successfully logged in!");
       localStorage.setItem("token", data.token);
       navigate("/dashboard");
-
       
     } catch (error) {
       console.error(error.message);
@@ -63,8 +62,8 @@ const Login = () => {
       </div>
       <button type="submit">Login</button>
       <Link to="/register">
-          <button>Create an account here!</button>
-        </Link>
+        <button>Create an account here!</button>
+      </Link>
     </form>
   );
 };

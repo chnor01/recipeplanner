@@ -29,6 +29,9 @@ const Dashboard = () => {
           <Link to="/add-weekly">
             <button>Add recipe to daily meal plan</button>
           </Link>
+          <Link to="/shoppinglist">
+            <button>View weekly shopping list</button>
+          </Link>
         </div>
       </section>
     </div>
