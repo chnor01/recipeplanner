@@ -23,15 +23,25 @@ services:
 
   mongo:
     image: mongo:latest
-    ports: 
+    ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+      - ./mongo-seed:/mongo-seed
     networks:
       - mern-network
 
+  mongo-seed:
+    build: ./data
+    networks:
+      - mern-network
+    depends_on:
+      - mongo
+
+
 networks:
   mern-network:
+
 
 volumes:
   mongo-data:
