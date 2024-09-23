@@ -27,12 +27,12 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-      - ./mongo-seed:/mongo-seed
+      - ./data-seed:/data-seed
     networks:
       - mern-network
 
   mongo-seed:
-    build: ./data
+    build: ./data-seed
     networks:
       - mern-network
     depends_on:
