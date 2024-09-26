@@ -10,5 +10,3 @@ backend/node_modules/
 
 frontend/public
 .vscode
-
-backend/food_nutrition.json
