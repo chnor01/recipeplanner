@@ -1,0 +1,47 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/usr/src/app
+    networks:
+      - mern-network
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/usr/src/app
+    networks:
+      - mern-network
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./data-seed:/data-seed
+    networks:
+      - mern-network
+
+  mongo-seed:
+    build: ./data-seed
+    networks:
+      - mern-network
+    depends_on:
+      - mongo
+
+
+networks:
+  mern-network:
+
+
+volumes:
+  mongo-data:
