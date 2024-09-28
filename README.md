@@ -1,7 +1,6 @@
 # Recipe Planner
 
-Recipe Planner is a MERN-stack web application designed to help users create, manage, and schedule recipes. It also tracks nutritional information for the planned meals. This guide will help you set up and run the project locally.
-
+Recipe Planner is a MERN-stack web application designed to help users create, manage, and schedule recipes. 
 ---
 
 ## Prerequisites
@@ -10,11 +9,11 @@ Make sure the following are installed on your machine:
 
 - [Node.js](https://nodejs.org/)
 - [MongoDB](https://www.mongodb.com/)
-- [Docker](https://www.docker.com/) (Not required for local deployment)
+- [Docker](https://www.docker.com/) (Only for Docker setup)
 
 ---
 
-## Local installation
+## Local setup
 
 1. Make sure MongoDB is running
 2. Clone the repo
