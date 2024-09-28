@@ -28,17 +28,9 @@ services:
     networks:
       - mern-network
 
-  mongo-seed:
-    build: ./data-seed
-    networks:
-      - mern-network
-    depends_on:
-      - mongo
-
-
 networks:
   mern-network:
 
-
 volumes:
   mongo-data:
+

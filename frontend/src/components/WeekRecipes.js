@@ -36,7 +36,7 @@ const WeekRecipes = () => {
       } else {
         const errorData = await response.json();
         console.error("Error adding recipe: ", errorData);
-        alert("Failed to add to weekly recipes!");
+        alert(errorData.msg);
       }
     } catch (error) {
       console.error("Error fetching recipes:", error);

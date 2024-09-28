@@ -12,25 +12,25 @@ const Dashboard = () => {
         <p>Here you can manage your recipes.</p>
         <div className="dashboard-links">
           <Link to="/add">
-            <button>Add a recipe</button>
+            <button>Create recipe</button>
           </Link>
           <Link to="/view">
-            <button>View all recipes</button>
+            <button>View recipes</button>
           </Link>
           <Link to="/delete">
-            <button>Delete a recipe</button>
+            <button>Delete recipe</button>
           </Link>
           <Link to="/update">
-            <button>Update a recipe</button>
+            <button>Update recipe</button>
           </Link>
           <Link to="/view-weekly">
-            <button>View daily meal plan</button>
+            <button>View daily meals</button>
           </Link>
           <Link to="/add-weekly">
-            <button>Add recipe to daily meal plan</button>
+            <button>Add daily meal</button>
           </Link>
           <Link to="/shoppinglist">
-            <button>View weekly shopping list</button>
+            <button>Weekly shopping list</button>
           </Link>
         </div>
       </section>
