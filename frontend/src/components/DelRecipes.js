@@ -37,7 +37,7 @@ const DeleteRecipe = () => {
       } else {
         const data = await response.json();
         console.error("Error deleting recipe:", data);
-        alert("Failed to delete recipe!");
+        alert("Error: " + data.message);
       }
     } catch (error) {
       console.error("Error deleting recipe: ", error);

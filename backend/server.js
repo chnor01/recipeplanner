@@ -6,8 +6,10 @@ const recipeRoutes = require("./routes/recipes");
 require("dotenv").config();
 const { FoodItem } = require("./models/User");
 const ingredientsData = require("./food_nutrition.json");
-
-
+const app = express();
+const port = 5000;
+app.use(express.json());
+app.use(cors());
 
 const importIngredientsData = async () => {
   ingredientsData.forEach(async (ingredient) => {
@@ -23,12 +25,6 @@ const importIngredientsData = async () => {
   });
   
 };
-
-const app = express();
-const port = 5000;
-
-app.use(express.json());
-app.use(cors());
 
 mongoose
   .connect(process.env.MONGO_URI_DOCKER || "mongodb://localhost:27017/usersdb")

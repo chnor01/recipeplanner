@@ -3,3 +3,4 @@ backend/node_modules/
 .npm/
 frontend/public
 .vscode
+.env
