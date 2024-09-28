@@ -16,14 +16,14 @@ Make sure the following are installed on your machine:
 ## Local setup
 
 1. Make sure MongoDB is running
-2. Clone the repo
+2. ```git clone https://github.com/chnor01/recipeplanner.git```
 3. Run ```npm install``` in /backend and /frontend
 4. Run ```npm start``` in /backend and /frontend
 
 ## Docker setup 
 
 1. Make sure Docker Engine is running
-2. Clone the repo
+2. ```git clone https://github.com/chnor01/recipeplanner.git```
 3.  ```cd recipeplanner ```
 4.   ```docker-compose up --build ```
 
