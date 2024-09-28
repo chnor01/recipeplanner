@@ -23,8 +23,8 @@ Make sure the following are installed on your machine:
 
 ## Docker setup 
 
-1. Clone the repo
-2. Make sure Docker Engine is running
+1. Make sure Docker Engine is running
+2. Clone the repo
 3.  ```cd recipeplanner ```
 4.   ```docker-compose up --build ```
 
