@@ -69,7 +69,7 @@ const ViewWeekly = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ minHeight: "100vh" }}>
       <header>
         <h1>Meal plan for the week</h1>
       </header>

@@ -9,9 +9,9 @@ const Homepage = () => {
       </header>
       <section className="homepage-content">
         <p>
-          Recipe Planner is your go-to app for managing and organizing your
+          Recipe Planner is an app for managing and organizing your
           favorite recipes. Add new recipes, view your weekly meal plan, and
-          keep track of all your culinary creations in one place.
+          keep track of all your recipes in one place.
         </p>
         <div className="homepage-links">
           <Link to="/register">
