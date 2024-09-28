@@ -110,7 +110,7 @@ const AddRecipe = () => {
       } else {
         const errorData = await response.json();
         console.error("Error adding recipe: ", errorData);
-        alert("Failed to add recipe!");
+        alert("Error: " + errorData.msg);
       }
     } catch (error) {
       console.error("Error adding recipe: ", error);

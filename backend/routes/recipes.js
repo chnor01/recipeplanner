@@ -397,13 +397,11 @@ router.delete("/delete-recipe", auth, async (req, res) => {
       }
     }
 
-    let empty_meals = false;
     for (const mealType in dayEntry.meals) {
       if (dayEntry.meals[mealType].length === 0) {
         const dayIndex = user.weeklyrecipes.indexOf(dayEntry);
         if (dayIndex !== -1) {
           user.weeklyrecipes.splice(dayIndex, 1);
-          empty_meals = true;
           break;
         }
       }

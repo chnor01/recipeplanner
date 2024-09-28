@@ -116,7 +116,7 @@ const UpdateRecipes = () => {
       } else {
         const errorData = await response.json();
         console.error("Error updating recipe: ", errorData);
-        alert("Failed to update recipe");
+        alert("Error: " + errorData.msg);
       }
     } catch (error) {
       console.error("Error updating recipe: ", error);
