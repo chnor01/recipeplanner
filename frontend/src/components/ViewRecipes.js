@@ -47,7 +47,7 @@ const ViewRecipes = () => {
               </p>
               {recipe.ingredients.map((ingredient, index) => (
                 <div key={index}>
-                  {ingredient.foodname}
+                  {ingredient.foodname} - {ingredient.quantity}g
                   {index < recipe.ingredients.length - 1 ? ", " : ""}
                 </div>
               ))}
