@@ -111,7 +111,7 @@ const ViewWeekly = () => {
                           <strong>Ingredients:</strong>
                           {recipe.ingredients.map((ingredient, index) => (
                             <div key={index}>
-                              {ingredient.foodname}
+                              {ingredient.foodname} - {ingredient.quantity}g
                               {index < recipe.ingredients.length - 1
                                 ? ", "
                                 : ""}
